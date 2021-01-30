@@ -1,8 +1,17 @@
 import Navbar from './Components/navbar';
 import Search from './Components/SearchForm/index';
 import List from './Components/list';
+import API from './utils/Api';
 import { Container, Row, Col } from 'react-bootstrap';
 import './App.css';
+
+const Employee = [];
+
+API.searchEmployee().then((res) => {
+  console.log(res);
+  Employee.push(res.data.results);
+  console.log(Employee);
+});
 
 function App() {
   return (
@@ -23,5 +32,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
