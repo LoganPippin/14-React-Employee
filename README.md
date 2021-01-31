@@ -16,7 +16,14 @@ It is a web application that allows you to search for employees and sort them al
 
 ## Screenshots
 
-![Deployed app](./public/assets/img/DA.png)
+-home screen
+![Deployed app](./employee-info/public/assests/home.png)
+-searching
+![serached](./employee-info/public/assests/serached.png)
+-sorting
+![sorted](./employee-info/public/assests/sorted.png)
+-searching and sorting
+![both](./employee-info/public/assests/both.png)
 
 ## Installation
 
