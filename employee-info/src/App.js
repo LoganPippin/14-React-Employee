@@ -1,31 +1,34 @@
 import Navbar from './Components/navbar';
 import Search from './Components/SearchForm/index';
 import List from './Components/list';
-import API from './utils/Api';
+import { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import './App.css';
 
-const Employee = [];
-
-API.searchEmployee().then((res) => {
-  console.log(res);
-  Employee.push(res.data.results);
-  console.log(Employee);
-});
-
 function App() {
+  const [state, setState] = useState({
+    search: '',
+  });
+
+  const handleInputChange = (event) => {
+    setState({ search: event.target.value });
+  };
+
   return (
     <div>
       <Navbar />
       <Container>
         <Row className="justify-content-md-center">
           <Col sm={4}>
-            <Search />
+            <Search
+              handleInputChange={handleInputChange}
+              results={state.search}
+            />
           </Col>
         </Row>
         <Row className="justify-content-md-center">
-          <Col sm={8}>
-            <List />
+          <Col>
+            <List search={state.search} />
           </Col>
         </Row>
       </Container>
