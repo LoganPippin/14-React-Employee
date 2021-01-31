@@ -9,6 +9,7 @@ function Tables(props) {
   });
 
   console.log(props.search);
+  console.log(props.sort);
 
   useEffect(() => {
     API.searchEmployee()
@@ -20,6 +21,23 @@ function Tables(props) {
           setEmployeeState({
             data: res.data.results.filter((emp) => emp.name.first.match(regex)),
           });
+
+          if (props.sort) {
+            setEmployeeState({
+              data: res.data.results.sort((a, b) => {
+                let fa = a.name.first.toLowerCase(),
+                  fb = b.name.first.toLowerCase();
+
+                if (fa < fb) {
+                  return -1;
+                }
+                if (fa > fb) {
+                  return 1;
+                }
+                return 0;
+              }),
+            });
+          }
         } else {
           setEmployeeState({
             data: res.data.results,
@@ -27,7 +45,7 @@ function Tables(props) {
         }
       })
       .catch((err) => console.log(err));
-  }, [props.search]);
+  }, [props.search, props.sort]);
 
   return (
     <div className="mt-5">

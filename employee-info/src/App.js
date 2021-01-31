@@ -1,17 +1,27 @@
 import Navbar from './Components/navbar';
 import Search from './Components/SearchForm/index';
 import List from './Components/list';
+import Button from './Components/button';
 import { useState } from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import './App.css';
 
 function App() {
   const [state, setState] = useState({
     search: '',
+    sort: false,
   });
 
   const handleInputChange = (event) => {
-    setState({ search: event.target.value });
+    setState({ ...state, search: event.target.value });
+  };
+
+  const handleSort = (event) => {
+    if (!state.sort) {
+      setState({ ...state, sort: true });
+    } else {
+      setState({ ...state, sort: false });
+    }
   };
 
   return (
@@ -27,13 +37,13 @@ function App() {
           </Col>
         </Row>
         <Row className="justify-content-md-center">
-          <Col sm={4}>
-            <Button variant="primary">Sort by Name Alphabetically</Button>
+          <Col>
+            <Button handleSort={handleSort} />
           </Col>
         </Row>
         <Row className="justify-content-md-center">
           <Col>
-            <List search={state.search} />
+            <List search={state.search} sort={state.sort} />
           </Col>
         </Row>
       </Container>
