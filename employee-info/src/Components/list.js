@@ -21,10 +21,28 @@ function Tables(props) {
           setEmployeeState({
             data: res.data.results.filter((emp) => emp.name.first.match(regex)),
           });
+        }
+        if (props.sort) {
+          setEmployeeState({
+            data: res.data.results.sort((a, b) => {
+              let fa = a.name.first.toLowerCase(),
+                fb = b.name.first.toLowerCase();
 
-          if (props.sort) {
-            setEmployeeState({
-              data: res.data.results.sort((a, b) => {
+              if (fa < fb) {
+                return -1;
+              }
+              if (fa > fb) {
+                return 1;
+              }
+              return 0;
+            }),
+          });
+        }
+        if (props.sort && props.search) {
+          const regex = new RegExp(props.search, 'gi');
+          setEmployeeState({
+            data: res.data.results
+              .sort((a, b) => {
                 let fa = a.name.first.toLowerCase(),
                   fb = b.name.first.toLowerCase();
 
@@ -35,13 +53,13 @@ function Tables(props) {
                   return 1;
                 }
                 return 0;
-              }),
-            });
-          }
-        } else {
-          setEmployeeState({
-            data: res.data.results,
+              })
+              .filter((emp) => emp.name.first.match(regex)),
           });
+        }
+
+        if (!props.sort && !props.search) {
+          setEmployeeState({ data: res.data.results });
         }
       })
       .catch((err) => console.log(err));
